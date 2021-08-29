@@ -1,6 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="day04.*"%>
-<jsp:useBean id="memberDAO" class="day04.MemberDAO" scope="application" />
+	pageEncoding="UTF-8"%>
+<%
+	request.setCharacterEncoding("UTF-8");
+%>
+<jsp:useBean id="memberVO" class="model.MemberVO" />
+<jsp:useBean id="memController" class="controller.memController" />
+<jsp:setProperty property="*" name="memberVO" />
+<jsp:useBean id="memberDAO" class="model.MemberDAO" scope="application" />
+<%
+	memController.signUp(memberVO);
+%>
+
 <!DOCTYPE HTML>
 <!--
 	Stellar by HTML5 UP
@@ -51,28 +61,24 @@
 			<section id="intro" class="main">
 				<div class="spotlight">
 					<div class="content">
-
-						<a href="mem_reg.html">☞회원가입하러가기</a> <br> <a
-							href="NewFile.html">☞로그인</a> <br>
+						<h2>회원가입</h2>
 						<hr>
 						<table border="1">
 							<tr>
-								<th>이름</th>
-								<th>아이디</th>
-								<th>비밀번호</th>
+								<td>이름</td>
+								<td><%=memberVO.getName()%></td>
 							</tr>
-							<%
-								for (MemberVO vo : memberDAO.getDatas()) {
-							%>
 							<tr>
-								<td><%=vo.getName()%></td>
-								<td><%=vo.getUserID()%></td>
-								<td><%=vo.getUserPW()%></td>
+								<td>아이디</td>
+								<td><%=memberVO.getUserID()%></td>
 							</tr>
-							<%
-								}
-							%>
+							<tr>
+								<td>비밀번호</td>
+								<td><%=memberVO.getUserPW()%></td>
+							</tr>
 						</table>
+						<hr>
+						<a href="index.jsp">처음으로</a>
 					</div>
 					<span class="image"><img src="images/tmIcon.png"
 						alt="티모 아이콘" /></span>

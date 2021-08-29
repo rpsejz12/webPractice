@@ -1,9 +1,11 @@
-package day04;
+package model;
 
 public class MemberVO {
 	private String name;
 	private String userID;
 	private String userPW;
+
+	
 	public String getName() {
 		return name;
 	}

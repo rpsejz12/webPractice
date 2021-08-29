@@ -1,14 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" import="model.*, controller.*"%>
 <%
 	request.setCharacterEncoding("UTF-8");
 %>
-<jsp:useBean id="memberVO" class="day04.MemberVO" />
+
+<jsp:useBean id="memberDAO" class="model.MemberDAO" scope="application" />
+<jsp:useBean id="memController" class="controller.memController" scope="application" />
+<jsp:useBean id="memberVO" class="model.MemberVO" />
 <jsp:setProperty property="*" name="memberVO" />
-<jsp:useBean id="memberDAO" class="day04.MemberDAO" scope="application" />
-<%
-	memberDAO.addMember(memberVO);
-%>
 <!DOCTYPE HTML>
 <!--
 	Stellar by HTML5 UP
@@ -59,13 +58,16 @@
 			<section id="intro" class="main">
 				<div class="spotlight">
 					<div class="content">
-						<h2>회원가입</h2>
-						<hr>
+						<%
+							if (memController.login(memberVO)) {
+								out.println("<h1>로그인 성공!</h1>");
+							}
+
+							else {
+								out.println("<h1>로그인 실패...</h1>");
+							}
+						%>
 						<table border="1">
-							<tr>
-								<td>이름</td>
-								<td><%=memberVO.getName()%></td>
-							</tr>
 							<tr>
 								<td>아이디</td>
 								<td><%=memberVO.getUserID()%></td>
@@ -75,8 +77,6 @@
 								<td><%=memberVO.getUserPW()%></td>
 							</tr>
 						</table>
-						<hr>
-						<a href="mem_main.jsp">처음으로</a>
 					</div>
 					<span class="image"><img src="images/tmIcon.png"
 						alt="티모 아이콘" /></span>
@@ -136,11 +136,4 @@
 		<script src="assets/js/main.js"></script>
 </body>
 </html>
-
-
-</body>
-</html>
-
-
-
 
