@@ -1,10 +1,19 @@
 package model;
 
 public class MemberVO {
+	private int num;
 	private String name;
 	private String userID;
 	private String userPW;
 
+	
+	
+	public int getNum() {
+		return num;
+	}
+	public void setNum(int num) {
+		this.num = num;
+	}
 	
 	public String getName() {
 		return name;

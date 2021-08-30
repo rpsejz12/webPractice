@@ -11,7 +11,7 @@ public class MemberDAO {
 
 	String selectAll = "select * from member"; 					//회원목록 (이름,아이디,비번)
 	String selectOne = "insert into member values(?,?)";		//로그읜 (아이디,비번)
-	String insert = "insert into member values(?,?,?)";			//회원가입(이름, 아이디,비번)
+	String insert = "insert into member values((select nvl(max(num),0)+1 from member),?,?,?)";			//회원가입(이름, 아이디,비번)
 
 
 	private static Connection conn = null;
@@ -35,7 +35,6 @@ public class MemberDAO {
 	}
 
 	public ArrayList<MemberVO> SelectAll() {
-		MemberVO memvo = new MemberVO();
 		ArrayList<MemberVO> memal = new ArrayList<MemberVO>();
 		
 		conn=JDBC.getConnection();
@@ -45,6 +44,7 @@ public class MemberDAO {
 			pstmt = conn.prepareStatement(selectAll);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
+				MemberVO memvo = new MemberVO();
 				memvo.setName(rs.getString("name"));
 				memvo.setUserID(rs.getString("userID"));
 				memvo.setUserPW(rs.getString("userPW"));

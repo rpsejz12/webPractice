@@ -1,19 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="model.*, controller.*"%>
-<%
-	request.setCharacterEncoding("UTF-8");
-%>
+    pageEncoding="UTF-8" isErrorPage="true"%>
+<!DOCTYPE html>
 
-<jsp:useBean id="memberDAO" class="model.MemberDAO" scope="application" />
-<jsp:useBean id="memController" class="controller.memController" scope="application" />
-<jsp:useBean id="memberVO" class="model.MemberVO" />
-<jsp:setProperty property="*" name="memberVO" />
-<!DOCTYPE HTML>
-<!--
-	Stellar by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
+
+
+
+
 <html>
 <head>
 <title>Stellar by HTML5 UP</title>
@@ -58,25 +50,7 @@
 			<section id="intro" class="main">
 				<div class="spotlight">
 					<div class="content">
-						<%
-							if (memController.login(memberVO)) {
-								out.println("<h1>로그인 성공!</h1>");
-							}
-
-							else {
-								out.println("<h1>로그인 실패...</h1>");
-							}
-						%>
-						<table border="1">
-							<tr>
-								<td>아이디</td>
-								<td><%=memberVO.getUserID()%></td>
-							</tr>
-							<tr>
-								<td>비밀번호</td>
-								<td><%=memberVO.getUserPW()%></td>
-							</tr>
-						</table>
+<h2>에러 발생!</h2>
 					</div>
 					<span class="image"><img src="images/tmIcon.png"
 						alt="티모 아이콘" /></span>
@@ -134,12 +108,23 @@
 		<script src="assets/js/breakpoints.min.js"></script>
 		<script src="assets/js/util.js"></script>
 		<script src="assets/js/main.js"></script>
-	
-		<script type="text/javascript">
-		window.setInterval(function(){				/*대기시간 이후 페이지 이동*/
-			window.location = "main.jsp";
-		},1000);
-		</script>
 </body>
 </html>
 
+
+
+
+
+
+<!-- 
+<html>
+<head>
+<meta charset="UTF-8">
+<title>오류 처리를 위한 페이지</title>
+</head>
+<body>
+
+<h2>에러 발생!</h2>
+
+</body>
+</html> -->

@@ -35,6 +35,9 @@ public class memController {
 	
 
 	public void signUp(MemberVO memvo) {
+		for(MemberVO vo: memal) {
+			System.out.println(vo);
+		}
 		memdao.Insert(memvo);
 	}
 	

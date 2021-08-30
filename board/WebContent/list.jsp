@@ -1,19 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="model.*, controller.*"%>
-<%
-	request.setCharacterEncoding("UTF-8");
-%>
+	pageEncoding="UTF-8" import="model.message.*,java.util.*"%>
+<jsp:useBean id="datas" class="java.util.ArrayList" scope="request" />
+<!DOCTYPE html>
 
-<jsp:useBean id="memberDAO" class="model.MemberDAO" scope="application" />
-<jsp:useBean id="memController" class="controller.memController" scope="application" />
-<jsp:useBean id="memberVO" class="model.MemberVO" />
-<jsp:setProperty property="*" name="memberVO" />
-<!DOCTYPE HTML>
-<!--
-	Stellar by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
+
+
+
+
 <html>
 <head>
 <title>Stellar by HTML5 UP</title>
@@ -58,24 +51,32 @@
 			<section id="intro" class="main">
 				<div class="spotlight">
 					<div class="content">
-						<%
-							if (memController.login(memberVO)) {
-								out.println("<h1>로그인 성공!</h1>");
-							}
 
-							else {
-								out.println("<h1>로그인 실패...</h1>");
-							}
-						%>
+						<h2>게시글 목록</h2>
+						<hr>
+						<a href="form.jsp">글 등록</a>
+						<hr>
 						<table border="1">
 							<tr>
-								<td>아이디</td>
-								<td><%=memberVO.getUserID()%></td>
+								<th>글 번호</th>
+								<th>제목</th>
+								<th>작성자</th>
+								<th>작성일</th>
 							</tr>
+							<%
+								for (MessageVO vo : (ArrayList<MessageVO>) datas) {
+							%>
 							<tr>
-								<td>비밀번호</td>
-								<td><%=memberVO.getUserPW()%></td>
+								<td><a
+									href="control.jsp?action=edit&mnum=<%=vo.getMnum()%>"><%=vo.getMnum()%></a></td>
+								<!-- 글 변경을 위한 비밀번호 등의 인증작업처리 필요! -->
+								<td><%=vo.getTitle()%></td>
+								<td><%=vo.getWriter()%></td>
+								<td><%=vo.getWdate()%></td>
 							</tr>
+							<%
+								}
+							%>
 						</table>
 					</div>
 					<span class="image"><img src="images/tmIcon.png"
@@ -134,12 +135,49 @@
 		<script src="assets/js/breakpoints.min.js"></script>
 		<script src="assets/js/util.js"></script>
 		<script src="assets/js/main.js"></script>
-	
-		<script type="text/javascript">
-		window.setInterval(function(){				/*대기시간 이후 페이지 이동*/
-			window.location = "main.jsp";
-		},1000);
-		</script>
 </body>
 </html>
 
+
+
+
+
+
+
+
+
+<%-- <html>
+<head>
+<meta charset="UTF-8">
+<title>글 목록 화면</title>
+</head>
+<body>
+
+	<h2>게시글 목록</h2>
+	<hr>
+	<a href="form.jsp">글 등록</a>
+	<hr>
+	<table border="1">
+		<tr>
+			<th>글 번호</th>
+			<th>제목</th>
+			<th>작성자</th>
+			<th>작성일</th>
+		</tr>
+		<%
+			for (MessageVO vo : (ArrayList<MessageVO>) datas) {
+		%>
+		<tr>
+			<td><a href="control.jsp?action=edit&mnum=<%=vo.getMnum()%>"><%=vo.getMnum()%></a></td>
+			<!-- 글 변경을 위한 비밀번호 등의 인증작업처리 필요! -->
+			<td><%=vo.getTitle()%></td>
+			<td><%=vo.getWriter()%></td>
+			<td><%=vo.getWdate()%></td>
+		</tr>
+		<%
+		}
+	%>
+	</table>
+
+</body>
+</html> --%>

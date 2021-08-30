@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8" import="model.* ,controller.*"%>
 <jsp:useBean id="memberDAO" class="model.MemberDAO" scope="application" />
 <jsp:useBean id="controller" class="controller.memController" scope="application" />
-<% controller.start(); %>
 <!DOCTYPE HTML>
 
 <!--
@@ -64,6 +63,7 @@
 								<th>아이디</th>
 								<th>비밀번호</th>
 							</tr>
+							<% controller.start(); %>
 							<%
 								for (MemberVO vo : controller.memal ) {
 							%>

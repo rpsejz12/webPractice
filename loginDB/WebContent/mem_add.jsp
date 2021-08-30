@@ -78,7 +78,6 @@
 							</tr>
 						</table>
 						<hr>
-						<a href="index.jsp">처음으로</a>
 					</div>
 					<span class="image"><img src="images/tmIcon.png"
 						alt="티모 아이콘" /></span>
@@ -136,10 +135,11 @@
 		<script src="assets/js/breakpoints.min.js"></script>
 		<script src="assets/js/util.js"></script>
 		<script src="assets/js/main.js"></script>
-</body>
-</html>
-
-
+		<script type="text/javascript">
+		window.setInterval(function(){				/*대기시간 이후 페이지 이동*/
+			window.location = "index.jsp";
+		},1000);
+		</script>
 </body>
 </html>
 

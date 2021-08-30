@@ -1,14 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="model.*, controller.*"%>
-<%
-	request.setCharacterEncoding("UTF-8");
-%>
-
+	pageEncoding="UTF-8" import="model.* ,controller.*"%>
 <jsp:useBean id="memberDAO" class="model.MemberDAO" scope="application" />
-<jsp:useBean id="memController" class="controller.memController" scope="application" />
-<jsp:useBean id="memberVO" class="model.MemberVO" />
-<jsp:setProperty property="*" name="memberVO" />
+<jsp:useBean id="controller" class="controller.memController"
+	scope="application" />
 <!DOCTYPE HTML>
+
 <!--
 	Stellar by HTML5 UP
 	html5up.net | @ajlkn
@@ -58,28 +54,21 @@
 			<section id="intro" class="main">
 				<div class="spotlight">
 					<div class="content">
-						<%
-							if (memController.login(memberVO)) {
-								out.println("<h1>로그인 성공!</h1>");
-							}
+						<form action="addProduct.jsp" name="form1" method="post">
+							<select name="product">
+								<option>셔츠</option>
+								<option>블라우스</option>
+								<option selected>반팔티</option>
+								<option>청바지</option>
+								<option>운동화</option>
+							</select> <input type="number" value="1" name="cnt"> <input
+								type="submit" value="상품 추가하기">
+						</form>
+						<hr>
+						<a href="buy.jsp">구매하기</a>
 
-							else {
-								out.println("<h1>로그인 실패...</h1>");
-							}
-						%>
-						<table border="1">
-							<tr>
-								<td>아이디</td>
-								<td><%=memberVO.getUserID()%></td>
-							</tr>
-							<tr>
-								<td>비밀번호</td>
-								<td><%=memberVO.getUserPW()%></td>
-							</tr>
-						</table>
+
 					</div>
-					<span class="image"><img src="images/tmIcon.png"
-						alt="티모 아이콘" /></span>
 				</div>
 			</section>
 			<!-- Footer -->
@@ -134,12 +123,8 @@
 		<script src="assets/js/breakpoints.min.js"></script>
 		<script src="assets/js/util.js"></script>
 		<script src="assets/js/main.js"></script>
-	
-		<script type="text/javascript">
-		window.setInterval(function(){				/*대기시간 이후 페이지 이동*/
-			window.location = "main.jsp";
-		},1000);
-		</script>
 </body>
 </html>
+
+
 
