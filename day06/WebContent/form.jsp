@@ -1,10 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" isErrorPage="true"%>
+	pageEncoding="UTF-8" import="java.util.*,model.message.*, model.member.*"
+	errorPage="error.jsp"%>
+<%
+	request.setCharacterEncoding("UTF-8");
+%>
+<jsp:useBean id="messageDAO" class="model.message.MessageDAO" />
+<jsp:useBean id="messageVO" class="model.message.MessageVO" />
+<jsp:useBean id="memberDAO" class="model.member.MemberDAO" />
+<jsp:useBean id="memberVO" class="model.member.MemberVO" scope = "session"/>
+<jsp:setProperty property="*" name="messageVO" />
+
+<% MemberVO mem = (MemberVO)session.getAttribute("mem"); %>
+
+
+
+
 <!DOCTYPE html>
-
-
-
-
 
 <html>
 <head>
@@ -50,10 +61,32 @@
 			<section id="intro" class="main">
 				<div class="spotlight">
 					<div class="content">
-<h2>에러 발생!</h2>
+						<a href="control.jsp?action=list">메인으로 돌아가기</a>
+						<hr>
+						<form action="control.jsp" method="post" name="form1">
+							<input type="hidden" name="action" value="insert">
+							<table border="1">
+								<tr>
+									<td>작성자</td>
+									<td><input type="text" name="writer" value ="<%= mem.getBid() %>"
+										required readonly></td>
+								</tr>
+								<tr>
+									<td>제목</td>
+									<td><input type="text" name="title" placeholder="제목"
+										required></td>
+								</tr>
+								<tr>
+									<td>내용</td>
+									<td><input type="text" name="content" placeholder="내용"
+										required></td>
+								</tr>
+								<tr>
+									<td colspan='2'><input type="submit" value="글쓰기"></td>
+								</tr>
+							</table>
+						</form>
 					</div>
-					<span class="image"><img src="images/tmIcon.png"
-						alt="티모 아이콘" /></span>
 				</div>
 			</section>
 			<!-- Footer -->
@@ -110,21 +143,3 @@
 		<script src="assets/js/main.js"></script>
 </body>
 </html>
-
-
-
-
-
-
-<!-- 
-<html>
-<head>
-<meta charset="UTF-8">
-<title>오류 처리를 위한 페이지</title>
-</head>
-<body>
-
-<h2>에러 발생!</h2>
-
-</body>
-</html> -->

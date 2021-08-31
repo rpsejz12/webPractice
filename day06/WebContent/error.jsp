@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="model.message.*,java.util.*"%>
-<jsp:useBean id="datas" class="java.util.ArrayList" scope="request" />
+    pageEncoding="UTF-8" isErrorPage="true"%>
 <!DOCTYPE html>
 
 
@@ -51,33 +50,7 @@
 			<section id="intro" class="main">
 				<div class="spotlight">
 					<div class="content">
-
-						<h2>게시글 목록</h2>
-						<hr>
-						<a href="form.jsp">글 등록</a>
-						<hr>
-						<table border="1">
-							<tr>
-								<th>글 번호</th>
-								<th>제목</th>
-								<th>작성자</th>
-								<th>작성일</th>
-							</tr>
-							<%
-								for (MessageVO vo : (ArrayList<MessageVO>) datas) {
-							%>
-							<tr>
-								<td><a
-									href="control.jsp?action=edit&mnum=<%=vo.getMnum()%>"><%=vo.getMnum()%></a></td>
-								<!-- 글 변경을 위한 비밀번호 등의 인증작업처리 필요! -->
-								<td><%=vo.getTitle()%></td>
-								<td><%=vo.getWriter()%></td>
-								<td><%=vo.getWdate()%></td>
-							</tr>
-							<%
-								}
-							%>
-						</table>
+<h2>에러 발생!</h2>
 					</div>
 					<span class="image"><img src="images/tmIcon.png"
 						alt="티모 아이콘" /></span>
@@ -141,43 +114,3 @@
 
 
 
-
-
-
-
-
-<%-- <html>
-<head>
-<meta charset="UTF-8">
-<title>글 목록 화면</title>
-</head>
-<body>
-
-	<h2>게시글 목록</h2>
-	<hr>
-	<a href="form.jsp">글 등록</a>
-	<hr>
-	<table border="1">
-		<tr>
-			<th>글 번호</th>
-			<th>제목</th>
-			<th>작성자</th>
-			<th>작성일</th>
-		</tr>
-		<%
-			for (MessageVO vo : (ArrayList<MessageVO>) datas) {
-		%>
-		<tr>
-			<td><a href="control.jsp?action=edit&mnum=<%=vo.getMnum()%>"><%=vo.getMnum()%></a></td>
-			<!-- 글 변경을 위한 비밀번호 등의 인증작업처리 필요! -->
-			<td><%=vo.getTitle()%></td>
-			<td><%=vo.getWriter()%></td>
-			<td><%=vo.getWdate()%></td>
-		</tr>
-		<%
-		}
-	%>
-	</table>
-
-</body>
-</html> --%>

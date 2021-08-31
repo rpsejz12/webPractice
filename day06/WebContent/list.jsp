@@ -1,16 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="java.util.*,model.message.*"
-	errorPage="error.jsp"%>
-<%
-	request.setCharacterEncoding("UTF-8");
-%>
-<jsp:useBean id="messageDAO" class="model.message.MessageDAO" />
-<jsp:useBean id="messageVO" class="model.message.MessageVO" />
-<jsp:setProperty property="*" name="messageVO" />
-
-
-
-
+	pageEncoding="UTF-8" import="model.message.*,java.util.*"%>
+<jsp:useBean id="datas" class="java.util.ArrayList" scope="request" />
 <!DOCTYPE html>
 
 <html>
@@ -57,34 +47,34 @@
 			<section id="intro" class="main">
 				<div class="spotlight">
 					<div class="content">
-						<a href="control.jsp?action=list">메인으로 돌아가기</a>
+
+						<h2>게시글 목록</h2>
 						<hr>
-						<form action="control.jsp" method="post" name="form1">
-							<input type="hidden" name="action" value="insert">
-							<table border="1">
-								<tr>
-									<td>작성자</td>
-									<td><input type="text" name="writer" placeholder="작성자"
-										required></td>
-								</tr>
-								<tr>
-									<td>제목</td>
-									<td><input type="text" name="title" placeholder="작성자"
-										required></td>
-								</tr>
-								<tr>
-									<td>내용</td>
-									<td><input type="text" name="content" placeholder="작성자"
-										required></td>
-								</tr>
-								<tr>
-									<td colspan='2'><input type="submit" value="글쓰기"></td>
-								</tr>
-							</table>
-						</form>
+						<a href="form.jsp">글 등록</a>
+						<hr>
+						<table border="1">
+							<tr>
+								<th>글 번호</th>
+								<th>제목</th>
+								<th>작성자</th>
+								<th>작성일</th>
+							</tr>
+							<%
+								for (MessageVO vo : (ArrayList<MessageVO>) datas) {
+							%>
+							<tr>
+								<td><a
+									href="control.jsp?action=edit&mnum=<%=vo.getMnum()%>"><%=vo.getMnum()%></a></td>
+								<!-- 글 변경을 위한 비밀번호 등의 인증작업처리 필요! -->
+								<td><%=vo.getTitle()%></td>
+								<td><%=vo.getWriter()%></td>
+								<td><%=vo.getWdate()%></td>
+							</tr>
+							<%
+								}
+							%>
+						</table>
 					</div>
-					<span class="image"><img src="images/tmIcon.png"
-						alt="티모 아이콘" /></span>
 				</div>
 			</section>
 			<!-- Footer -->
@@ -141,46 +131,3 @@
 		<script src="assets/js/main.js"></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-<!-- <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>글 입력 화면</title>
-</head>
-<body>
-<a href="control.jsp?action=list">메인으로 돌아가기</a>
-<hr>
-<form action="control.jsp" method="post" name="form1">
-<input type="hidden" name="action" value="insert">
-<table border="1">
-   <tr>
-      <td>작성자</td>
-      <td><input type="text" name="writer" placeholder = "작성자" required></td>
-   </tr>
-   <tr>
-      <td>제목</td>
-      <td><input type="text" name="title" placeholder = "작성자" required></td>
-   </tr>
-   <tr>
-      <td>내용</td>
-      <td><input type="text" name="content" placeholder = "작성자" required></td>
-   </tr>
-   <tr>
-      <td colspan='2'><input type="submit" value="글쓰기"></td>
-   </tr>
-</table>
-</form>
-
-
-</body>
-</html> -->

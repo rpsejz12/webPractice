@@ -4,5 +4,5 @@
 	// 컨트롤러 페이지에게
 	// list.jsp를 보여달라고 요청
 	// -> action=list
-	pageContext.forward("control.jsp?action=list");
+	pageContext.forward("control.jsp?action=loginForm");
 %>

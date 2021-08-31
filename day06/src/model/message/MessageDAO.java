@@ -68,17 +68,19 @@ public class MessageDAO {
 		return data;
 	}
 
-	public void insertDB(MessageVO vo) {
+	public boolean insertDB(MessageVO vo) {
+		boolean res= false;
 		Connection conn=JDBC.connect();
 		PreparedStatement pstmt=null;
 		try{
-			String sql="insert into message values((select nvl(max(mnum),0)+1 from message),?,?,?,sysdate)";
+			String sql="insert into message(writer, title, content, wdate) values(?,?,?,curdate());";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, vo.getWriter());
 			pstmt.setString(2, vo.getTitle());
 			pstmt.setString(3, vo.getContent());
 			if (vo.getTitle() != null) {
 				pstmt.executeUpdate(); // 』』』
+				res=true;
 			}
 		}
 		catch(Exception e){
@@ -88,10 +90,12 @@ public class MessageDAO {
 		finally {
 			JDBC.disconnect(pstmt,conn);
 		}
+		return res;
 
 	}
 
-	public void deleteDB(MessageVO vo) {
+	public boolean deleteDB(MessageVO vo) {
+		boolean res = false;
 		
 		Connection conn=JDBC.connect();
 		PreparedStatement pstmt=null;
@@ -101,6 +105,7 @@ public class MessageDAO {
 			pstmt.setInt(1, vo.getMnum());
 			if (vo.getTitle() != null) {
 				pstmt.executeUpdate(); // 』』』
+				res = true;
 			}
 		}
 		catch(Exception e){
@@ -110,22 +115,25 @@ public class MessageDAO {
 		finally {
 			JDBC.disconnect(pstmt,conn);
 		}
+		return res;
 
 	}
 
 
-	public void updateDB(MessageVO vo) {
-		
+	public boolean updateDB(MessageVO vo) {
+		boolean res = false;
 		Connection conn=JDBC.connect();
 		PreparedStatement pstmt=null;
 		try{
-			String sql="update message set title = ?, content = ?, wdate = sysdate where mnum = ?";
+			String sql="update message set title = ?, content = ?, wdate = curdate() where mnum = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, vo.getTitle());
 			pstmt.setString(2, vo.getContent());
 			pstmt.setInt(3, vo.mnum);
 			if (vo.getTitle() != null) {
 				pstmt.executeUpdate(); // 』』』
+				res= true;
+				
 			}
 		}
 		catch(Exception e){
@@ -135,6 +143,7 @@ public class MessageDAO {
 		finally {
 			JDBC.disconnect(pstmt,conn);
 		}
+		return res;
 
 	}
 }

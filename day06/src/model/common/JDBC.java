@@ -8,11 +8,11 @@ public class JDBC {
 
 	public static Connection connect() {
 		Connection conn=null;
-		String jdbc_driver = "oracle.jdbc.driver.OracleDriver";
-		String jdbc_url = "jdbc:oracle:thin:@localhost:1521:xe";
+		String jdbc_driver = "com.mysql.cj.jdbc.Driver";
+		String jdbc_url = "jdbc:mysql://localhost:3308/new_schema";
 		try{
 			Class.forName(jdbc_driver);
-			conn=DriverManager.getConnection(jdbc_url,"kim","1234");
+			conn=DriverManager.getConnection(jdbc_url,"root","1234");
 		}
 		catch(Exception e){
 			System.out.println("connect()에서 출력");
