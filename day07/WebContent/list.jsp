@@ -1,0 +1,199 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8" import="model.message.*,java.util.*"%>
+<jsp:useBean id="datas" class="java.util.ArrayList" scope="request" />
+<jsp:useBean id="memberVO" class="model.member.MemberVO" scope="session" />
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>Stellar by HTML5 UP</title>
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, user-scalable=no" />
+<link rel="stylesheet" href="assets/css/main.css" />
+<noscript>
+	<link rel="stylesheet" href="assets/css/noscript.css" />
+</noscript>
+</head>
+<body class="is-preload">
+
+	<!-- Wrapper -->
+	<div id="wrapper">
+
+		<!-- Header -->
+		<header id="header" class="alt">
+			<span class="logo"><img src="images/logo.svg" alt="" /></span>
+			<h1>Stellar</h1>
+			<p>
+				Just another free, fully responsive site template<br /> built by <a
+					href="https://twitter.com/ajlkn">@ajlkn</a> for <a
+					href="https://html5up.net">HTML5 UP</a>.
+			</p>
+		</header>
+
+		<!-- Nav -->
+		<nav id="nav">
+			<ul>
+				<li><a href="#intro" class="active">Introduction</a></li>
+				<li><a href="#first">First Section</a></li>
+				<li><a href="#second">Second Section</a></li>
+				<li><a href="#cta">Get Started</a></li>
+			</ul>
+		</nav>
+
+		<!-- Main -->
+		<div id="main">
+
+			<!-- Introduction -->
+			<section id="intro" class="main">
+				<div class="spotlight">
+					<div class="content">
+
+						<h2>게시글 목록</h2>
+						<hr>
+
+						<%
+						if (memberVO.getBid() != null) {
+						%>
+						<a href="form.jsp">글 등록</a> &ensp; <a
+							href="control.jsp?action=myList">내글보기</a><br> <br>
+						<%
+						}
+						%>
+						<a href="control.jsp?action=list">전체목록</a>
+
+						<!-- 숨기고 검색했을경우에만 보여주고 싶지만 방법이 없다 -->
+						<hr>
+						<table border="1">
+							<tr>
+								<th>글 번호</th>
+								<th>제목</th>
+								<th>작성자</th>
+								<th>작성일</th>
+							</tr>
+							<%
+							if (datas.size() != 0) {
+								for (MessageVO vo : (ArrayList<MessageVO>) datas) {
+							%>
+							<tr>
+								<td><a
+									href="control.jsp?action=edit&mnum=<%=vo.getMnum()%>"><%=vo.getMnum()%></a></td>
+
+								<!-- 글 변경을 위한 비밀번호 등의 인증작업처리 필요! -->
+								<td><%=vo.getTitle()%></td>
+								<td><%=vo.getWriter()%></td>
+								<td><%=vo.getWdate()%></td>
+							</tr>
+							<%
+							}
+							} else {
+							%>
+							<tr>
+								<td>게시물이 없습니다.</td>
+							</tr>
+							<%
+							}
+							%>
+
+						</table>
+						<form action="control.jsp" method="post" name="form1">
+							<input type="hidden" name="action" value="search">
+							<table border="1">
+								<tr>
+									<td><select name="type">
+											<option value="1" selected>제목</option>
+											<option value="2">작성자</option>
+											<option value="3">내용</option>
+											<option value="4">제목+내용</option>
+									</select></td>
+									<td><input type="text" name="content"
+										placeholder="검색 하실 내용을 입력하세요."></td>
+									<td><input type="submit" value="검색"></td>
+								</tr>
+							</table>
+						</form>
+					</div>
+				</div>
+
+				<%
+				if (memberVO.getBid() == null) {
+				%>
+				<a href="control.jsp?action=loginForm">로그인</a>&ensp;
+				<%
+				} else {
+				%>
+				<a href="control.jsp?action=logout">로그아웃</a>&ensp; <a href="#;"
+					onClick="signout()">회원탈퇴</a>
+				<%
+				}
+				%>
+
+
+			</section>
+			<!-- Footer -->
+			<footer id="footer">
+				<section>
+					<h2>Aliquam sed mauris</h2>
+					<p>Sed lorem ipsum dolor sit amet et nullam consequat feugiat
+						consequat magna adipiscing tempus etiam dolore veroeros. eget
+						dapibus mauris. Cras aliquet, nisl ut viverra sollicitudin, ligula
+						erat egestas velit, vitae tincidunt odio.</p>
+					<ul class="actions">
+						<li><a href="generic.html" class="button">Learn More</a></li>
+					</ul>
+				</section>
+				<section>
+					<h2>Etiam feugiat</h2>
+					<dl class="alt">
+						<dt>Address</dt>
+						<dd>1234 Somewhere Road &bull; Nashville, TN 00000 &bull; USA</dd>
+						<dt>Phone</dt>
+						<dd>(000) 000-0000 x 0000</dd>
+						<dt>Email</dt>
+						<dd>
+							<a href="#">information@untitled.tld</a>
+						</dd>
+					</dl>
+					<ul class="icons">
+						<li><a href="#" class="icon brands fa-twitter alt"><span
+								class="label">Twitter</span></a></li>
+						<li><a href="#" class="icon brands fa-facebook-f alt"><span
+								class="label">Facebook</span></a></li>
+						<li><a href="#" class="icon brands fa-instagram alt"><span
+								class="label">Instagram</span></a></li>
+						<li><a href="#" class="icon brands fa-github alt"><span
+								class="label">GitHub</span></a></li>
+						<li><a href="#" class="icon brands fa-dribbble alt"><span
+								class="label">Dribbble</span></a></li>
+					</ul>
+				</section>
+				<p class="copyright">
+					&copy; Untitled. Design: <a href="https://html5up.net">HTML5 UP</a>.
+				</p>
+			</footer>
+
+		</div>
+	</div>
+
+	<!-- Scripts -->
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/jquery.scrollex.min.js"></script>
+	<script src="assets/js/jquery.scrolly.min.js"></script>
+	<script src="assets/js/browser.min.js"></script>
+	<script src="assets/js/breakpoints.min.js"></script>
+	<script src="assets/js/util.js"></script>
+	<script src="assets/js/main.js"></script>
+	<script type="text/javascript">
+		function signout() {
+
+			var result = confirm("정말로 탈퇴하시겠습니까?");
+
+			if (result) {
+					document.form1.action.value = "signout";
+					document.form1.submit();
+			}
+
+		}
+	</script>
+</body>
+</html>
