@@ -1,0 +1,151 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" import="java.util.*,model.message.*,model.member.*,model.reply.*"%>
+<jsp:useBean id="mDAO" class="model.message.MessageDAO" />
+<jsp:useBean id="rDAO" class="model.reply.ReplyDAO" />
+<jsp:useBean id="uDAO" class="model.member.MemberDAO" />
+<jsp:useBean id="mVO" class="model.message.MessageVO" />
+<jsp:setProperty property="*" name="mVO"/>
+<jsp:useBean id="rVO" class="model.reply.ReplyVO" />
+<jsp:setProperty property="*" name="rVO"/>
+<jsp:useBean id="uVO" class="model.member.MemberVO" />
+<jsp:setProperty property="*" name="uVO"/>
+<%
+	String action=request.getParameter("action");
+	String mcntt=request.getParameter("mcnt");
+	String msgmid = request.getParameter("msgmid");
+	String msgmidd = (String)session.getAttribute("msgmidd");
+	String url="control.jsp?action=main";	
+	System.out.println(mcntt);
+	int mcnt=2;
+	if(mcntt!=null){
+		mcnt=Integer.parseInt(mcntt);
+	}
+	
+	
+	url= url+ "&mcnt="+mcnt;
+	if(msgmid!=null){
+		url= url+ "&msgmid="+msgmid;
+		url= url+ "&msgmidd="+msgmid;		
+	}
+	
+
+	if(action.equals("main")){
+		System.out.println("msgmid ="+msgmid);
+		System.out.println("msgmidd ="+msgmidd);
+		if(msgmid != null){
+			if(msgmidd !=null){
+				if(msgmidd.equals(msgmid)){
+					System.out.println("msgmid == msgmidd");
+					request.setAttribute("mcnt", mcnt);
+				}
+				else{
+					System.out.println("msgmid != msgmidd");
+					request.setAttribute("mcnt", 5);
+					System.out.println(request.getAttribute("mcnt"));
+					mcnt = 5;
+				}
+			}
+		}
+		else{
+			msgmid = "0";
+		}
+		
+		
+		ArrayList<MessageSet> datas=mDAO.selectAll(msgmid, mcnt);
+		session.setAttribute("msgmidd", msgmid);
+		request.setAttribute("datas", datas);
+		pageContext.forward("main.jsp");
+	}
+	
+	
+	else if (action.equals("login")) {
+
+		if (uDAO.selectOne(uVO) != null) {
+	uVO=uDAO.selectOne(uVO);
+	System.out.println(url);
+	session.setAttribute("mem", uVO);
+	System.out.println(uVO);
+	System.out.println("로그인 성공");
+	response.sendRedirect(url);
+		} else {
+	out.println("<script>alert('로그인 실패!');history.go(-1)</script>");
+		}
+	}
+
+	else if (action.equals("logout")) {
+		session.invalidate();
+		response.sendRedirect("control.jsp?action=main");
+	}
+
+	else if (action.equals("signup")) {
+
+		if (uDAO.insert(uVO)) {
+	System.out.println("회원가입 성공");
+	response.sendRedirect("control.jsp?action=main");
+		} else {
+	out.println("<script>alert('회원가입 실패!');history.go(-1)</script>");
+		}
+	}
+
+	else if (action.equals("signout")) {
+
+		if (uDAO.delete((MemberVO)session.getAttribute("mem"))) {
+	System.out.println("회원탈퇴 성공");
+	session.invalidate();
+	response.sendRedirect("control.jsp?action=main");
+		} else {
+	out.println("<script>alert('회원탈퇴 실패!');history.go(-1)</script>");
+		}
+	}
+
+	else if (action.equals("update")) {
+
+		if (uDAO.update(uVO)) {
+	session.setAttribute("mem", uVO);
+	System.out.println("정보변경 성공");
+	response.sendRedirect("control.jsp?action=main");
+		} else {
+	out.println("<script>alert('회원변경 실패!');history.go(-1)</script>");
+		}
+	}
+	
+	else if (action.equals("minsert")) {
+
+		if (mDAO.insert(mVO)) {
+			response.sendRedirect("control.jsp?action=main");
+		} else {
+			out.println("<script>alert('게시글 등록 실패!');history.go(-1)</script>");
+		}
+	}
+	
+	else if(action.equals("mdelete")){
+		if(mDAO.delete(mVO)){
+			response.sendRedirect("control.jsp?action=main");
+		}
+		else {
+			out.println("<script>alert('게시글 삭제 실패!');history.go(-1)</script>");
+		}
+		
+	}
+	else if(action.equals("rinsert")){
+		MemberVO vo = (MemberVO)session.getAttribute("mem");		
+		rVO.setId(vo.getId());
+		if(rDAO.insert(rVO)){
+			response.sendRedirect("control.jsp?action=main");
+		}
+		else {
+			out.println("<script>alert('리뷰 등록 실패!');history.go(-1)</script>");
+		}
+	}
+	
+	else if(action.equals("rdelete")){
+		if(rDAO.delete(rVO)){
+			response.sendRedirect("control.jsp?action=main");
+		}
+		else {
+			out.println("<script>alert('리뷰 삭제 실패!');history.go(-1)</script>");
+		}
+	}
+
+	
+%>
