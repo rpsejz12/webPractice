@@ -25,6 +25,15 @@
 ul {
 	list-style: none;
 }
+.ulist {
+	float: left;
+}
+
+.ad img{
+float: center;
+ width :100px;
+ height :100px;
+}
 </style>
 </head>
 <body class="is-preload">
@@ -37,21 +46,31 @@ ul {
 			<div class="logo">
 				<span class="icon fa-gem"></span>
 			</div>
+			<div class = "ulist">
+			<h3>새 맴버</h3>
+			<c:forEach var="v" items="${ulist}">	
+			<a href="control.jsp?action=main&qid=${v.id}">${v.id}</a>
+			<br>
+			</c:forEach>
+			<br>
+			</div>
+			
 			<div class="content">
 				<div class="inner">
-					<a href="control.jsp?action=main">전체목록보기</a>
+					<a href="control.jsp?action=main&qid=0">전체목록보기</a>
 					<c:forEach var="v" items="${datas}">
 						<c:set var="m" value="${v.m}" />
 						<h3>
-							[${m.id}] ${m.msg} &gt;&gt; [좋아요 ${m.favcount} | 댓글
-							${m.replycount} | ${m.mdate}]
+							[${m.id}] ${m.msg} &gt;&gt;
+							<mytag:fupdate mid = "${m.mid}" favcount =" ${m.favcount}"></mytag:fupdate>
+							 | 댓글	${m.replycount} | ${m.mdate}]
 							<span><mytag:delete type = "mdel" id ="${m.id}" mid ="${m.mid}"></mytag:delete></span>
 						</h3>
 						
 						<ul>
 							<c:forEach var="r" items="${v.rlist}">
 								<li>${r.id}>>${r.rmsg}[${r.rdate}]
-								<mytag:delete type = "rdel" id = "${r.id}" mid ="${r.rid}"></mytag:delete>
+								<mytag:delete type = "rdel" id = "${r.id}"  mid = "${m.mid}" rid ="${r.rid}"></mytag:delete>
 								</li>
 							</c:forEach>
 
@@ -84,6 +103,18 @@ ul {
 					<li><a href="#contact">회원가입</a></li>
 					<li><a href="#elements">Elements</a></li>
 				</ul> -->
+				<br>
+				
+			<div class = "ad">
+			<a href="https://ko-kr.facebook.com/">
+			<img alt="페이스북" src="images/facebook.png">
+			</a>
+			&nbsp;
+			<a href="https://www.youtube.com/">
+			<img alt="유튜브" src="images/youtube.png">
+			</a>
+			
+			</div>
 			</nav>
 		</header>
 
@@ -200,7 +231,7 @@ ul {
 								readonly></td>
 						</tr>
 						<tr>
-							<td>id</td>
+							<td>내용</td>
 							<td><input type="text" name="msg" required></td>
 						</tr>
 						<tr>

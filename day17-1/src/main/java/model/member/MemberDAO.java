@@ -49,8 +49,8 @@ public class MemberDAO {
 	public ArrayList<MemberVO> selectAll(){
 		datas= new ArrayList<MemberVO>();
 
+		conn = JNDI.connect();
 		try {
-			conn = JNDI.connect();
 			pstmt = conn.prepareStatement(selectAll);
 			rs = pstmt.executeQuery();
 			

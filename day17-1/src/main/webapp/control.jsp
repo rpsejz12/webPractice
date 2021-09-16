@@ -14,7 +14,13 @@
 	String mcntt=request.getParameter("mcnt");
 	String msgmid = request.getParameter("msgmid");
 	String msgmidd = (String)session.getAttribute("msgmidd");
-	String url="control.jsp?action=main";	
+	String qid = request.getParameter("qid");
+	String sid = (String)session.getAttribute("sid");
+	String url="control.jsp?action=main";
+	System.out.println();
+	System.out.println("action :" + action);
+	System.out.println("sid :" + sid);
+	System.out.println("qid :" + qid);
 	System.out.println(mcntt);
 	int mcnt=2;
 	if(mcntt!=null){
@@ -60,9 +66,27 @@
 
 		
 		System.out.println(url);
-		ArrayList<MessageSet> datas=mDAO.selectAll(msgmid, mcnt);
+		ArrayList<MessageSet> datas = new ArrayList<MessageSet>();
+		
+		if(qid == null){
+		datas=mDAO.selectAll(sid, msgmid, mcnt);
+		}else if(qid.equals("0")){
+			session.setAttribute("sid", null);
+			datas=mDAO.selectAll(null , msgmid, mcnt);
+			
+		}
+		
+		
+		else{
+			datas=mDAO.selectAll(qid, msgmid, mcnt);
+			session.setAttribute("sid", qid);
+		}
+		
+
+	
 		request.setAttribute("mcnt", mcnt);
 		session.setAttribute("msgmidd", msgmid);
+		session.setAttribute("ulist", uDAO.selectAll());
 		request.setAttribute("datas", datas);
 		pageContext.forward("main.jsp");
 	}
@@ -140,7 +164,7 @@
 		MemberVO vo = (MemberVO)session.getAttribute("mem");		
 		rVO.setId(vo.getId());
 		if(rDAO.insert(rVO)){
-			pageContext.forward("control.jsp?action=main");
+			pageContext.forward(url);
 		}
 		else {
 			out.println("<script>alert('리뷰 등록 실패!');history.go(-1)</script>");
@@ -148,11 +172,25 @@
 	}
 	
 	else if(action.equals("rdelete")){
+		String mid = request.getParameter("mid");
+		System.out.println(mid);
+		int midd = Integer.parseInt(mid);
+		rVO.setMid(midd);
 		if(rDAO.delete(rVO)){
 			pageContext.forward("control.jsp?action=main");
 		}
 		else {
 			out.println("<script>alert('리뷰 삭제 실패!');history.go(-1)</script>");
+		}
+	}
+	
+	else if(action.equals("fcnt")){
+		System.out.println("fcnt vo" + mVO);
+		if(mDAO.update(mVO)){
+			pageContext.forward(url);
+		}
+		else{
+			out.println("<script>alert('좋아요 실패!');history.go(-1)</script>");
 		}
 	}
 

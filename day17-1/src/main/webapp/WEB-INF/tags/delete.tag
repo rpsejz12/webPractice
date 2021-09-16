@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ attribute name="id" %>
 <%@ attribute name="mid" %>
+<%@ attribute name="rid" %>
 <%@ attribute name="type" %>
 
 
@@ -19,7 +20,7 @@
 
 <c:when test="${type=='rdel'}">
 <c:if test="${id eq mem.id}">
-	<a href="control.jsp?action=rdelete&rid=${mid}&mcnt=${mcnt}">&nbsp;&nbsp;삭제</a>
+	<a href="control.jsp?action=rdelete&rid=${rid}&mcnt=${mcnt}&mid=${mid}">&nbsp;&nbsp;삭제</a>
 </c:if>
 </c:when>
 </c:choose>

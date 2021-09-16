@@ -25,6 +25,8 @@ create table reply(
     constraint msgrp foreign key (mid) references message (mid) on delete cascade
 );
 
+drop table reply;
+
 
 select * from MESSAGE;
 
