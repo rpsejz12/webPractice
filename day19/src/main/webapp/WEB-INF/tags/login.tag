@@ -13,7 +13,7 @@
 	<c:when test="${mem ne null}">
 	<li><a href="#edit">내정보</a></li>
 	<li><a href="#minsert">새글 등록</a></li>
-	<li><a href="./control.jsp?action=logout">로그아웃</a></li>
+	<li><a href="./logout.do">로그아웃</a></li>
 	</c:when>
 	
 	</c:choose>

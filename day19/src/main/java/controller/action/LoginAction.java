@@ -16,30 +16,18 @@ public class LoginAction implements Action{
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException{		
 		HttpSession session=request.getSession();
-		ActionForward forward = null;
+		ActionForward forward = new ActionForward();
 
-		String mcntt=request.getParameter("mcnt");
-		String qid=request.getParameter("qid");
-		String msgmid=request.getParameter("mid");
-		
-		
+
 		MemberVO uVO = new MemberVO();
 		MemberDAO uDAO = new MemberDAO();
+		
 		
 		uVO.setId(request.getParameter("id"));
 		uVO.setPasswd(request.getParameter("passwd"));
 		
-		int mcnt=2;
-		if(mcntt!=null){
-			mcnt=Integer.parseInt(mcntt);
-		}
-		
 		if(uDAO.selectOne(uVO) != null) {
-			session.setAttribute("mem", uVO);
-			request.setAttribute("msgmid", msgmid);
-			request.setAttribute("qid", qid);
-			request.setAttribute("mcnt", mcnt);
-			forward=new ActionForward();
+			session.setAttribute("mem", uDAO.selectOne(uVO));
 			forward.setRedirect(false);
 			forward.setPath("main.do");
 			

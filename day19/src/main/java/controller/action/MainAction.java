@@ -1,7 +1,6 @@
 package controller.action;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -10,7 +9,6 @@ import javax.servlet.http.HttpSession;
 
 import model.member.MemberDAO;
 import model.message.MessageDAO;
-import model.message.MessageSet;
 
 public class MainAction implements Action{
 
@@ -55,7 +53,6 @@ public class MainAction implements Action{
 		else{
 			if(msgmidd.equals(msgmid)){		//이전과 같은 mid의 더보기 클릭시
 				System.out.println("msgmid == msgmidd");
-				mcnt +=3;
 			}
 			else{				// 이전과 다른 mid의 더보기 클릭시
 				System.out.println("msgmid != msgmidd");

@@ -14,6 +14,6 @@
 
 
 <c:when test="${mem ne null}">
-	<a href="control.jsp?action=fcnt&mid=${mid}&mcnt=${mcnt}">[♥ ${favcount}</a>
+	<a href="mfav.do?mid=${mid}&mcnt=${mcnt}&qid=${param.qid}">[♥ ${favcount}</a>
 </c:when>
 </c:choose>

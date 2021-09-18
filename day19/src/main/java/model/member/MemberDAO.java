@@ -117,7 +117,7 @@ public class MemberDAO {
 			pstmt = conn.prepareStatement(update);
 			pstmt.setString(1, vo.getPasswd());
 			pstmt.setString(2, vo.getId());
-			if(vo.getName() != null) {
+			if(vo.getPasswd() != null) {
 				pstmt.executeUpdate();
 				return true;
 			}

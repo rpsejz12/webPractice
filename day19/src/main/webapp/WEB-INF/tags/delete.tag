@@ -12,15 +12,14 @@
 <c:when test="${type=='mdel'}">
 
 <c:if test="${id eq mem.id}">
-	<a href="control.jsp?action=mdelete&mid=${mid}&mcnt=${mcnt}">&nbsp;&nbsp;게시글
-		삭제</a>
+	<a href="mdelete.do?mid=${mid}&mcnt=${mcnt}&qid=${param.qid}">&nbsp;&nbsp;게시글 삭제</a>
 </c:if>
 </c:when>
 
 
 <c:when test="${type=='rdel'}">
 <c:if test="${id eq mem.id}">
-	<a href="control.jsp?action=rdelete&rid=${rid}&mcnt=${mcnt}&mid=${mid}">&nbsp;&nbsp;삭제</a>
+	<a href="rdelete.do?rid=${rid}&mcnt=${mcnt}&mid=${mid}&qid=${param.qid}">&nbsp;&nbsp;삭제</a>
 </c:if>
 </c:when>
 </c:choose>

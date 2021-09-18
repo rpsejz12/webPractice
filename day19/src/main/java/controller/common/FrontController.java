@@ -11,8 +11,16 @@ import javax.servlet.http.HttpServletResponse;
 
 import controller.action.ActionForward;
 import controller.action.LoginAction;
+import controller.action.LogoutAction;
 import controller.action.MainAction;
+import controller.action.MdeleteAction;
+import controller.action.MfavAction;
+import controller.action.MinsertAction;
+import controller.action.RdeleteAction;
 import controller.action.RinsertAction;
+import controller.action.SignoutAction;
+import controller.action.SignupAction;
+import controller.action.UupdateAction;
 
 
 /**
@@ -63,31 +71,32 @@ public class FrontController extends HttpServlet {
 			forward=new LoginAction().execute(request, response);
 		}
 		else if(action.equals("/logout.do")) {	//로그아웃
+			forward=new LogoutAction().execute(request, response);
 
 		}
 		else if(action.equals("/signup.do")) {	//회원가입
-
+			forward=new SignupAction().execute(request, response);
 		}
 		else if(action.equals("/signout.do")) {	//회원탈퇴
-
+			forward=new SignoutAction().execute(request, response);
 		}
-		else if(action.equals("/update.do")) {	//회원정보 변경
-
+		else if(action.equals("/uupdate.do")) {	//회원정보 변경
+			forward=new UupdateAction().execute(request, response);
 		}
 		else if(action.equals("/minsert.do")) {	//댓글 입력
-
+			forward=new MinsertAction().execute(request, response);
 		}
 		else if(action.equals("/mdelete.do")) {	//댓글 삭제
-
+			forward=new MdeleteAction().execute(request, response);
 		}
 		else if(action.equals("/rinsert.do")) {	//대댓글 입력
 			forward=new RinsertAction().execute(request, response);
 		}
 		else if(action.equals("/rdelete.do")) {	//대댓글 삭제
-
+			forward=new RdeleteAction().execute(request, response);
 		}
-		else if(action.equals("/fcnt.do")) {	//좋아요
-
+		else if(action.equals("/mfav.do")) {	//좋아요
+			forward=new MfavAction().execute(request, response);
 		}
 
 

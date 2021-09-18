@@ -47,7 +47,7 @@ float: center;
 			<div class = "ulist">
 			<h3>새 맴버</h3>
 			<c:forEach var="v" items="${ulist}">	
-			<a href="main.do&qid=${v.id}">${v.id}</a>
+			<a href="main.do?qid=${v.id}">${v.id}</a>
 			<br>
 			</c:forEach>
 			<br>
@@ -75,8 +75,8 @@ float: center;
 							<li>
 							
 							
-							<a href="main.do?msgmid=${m.mid}&mcnt=${mcnt}">댓글 더보기</a> &nbsp;&nbsp;
-							<mytag:insert msgmid = "${param.msgmid}" mid = "${m.mid}" rmid = "${param.rmid}" />
+							<a href="main.do?msgmid=${m.mid}&mcnt=${mcnt+3}&qid=${param.qid}">댓글 더보기  "${param.msgmid}"</a> &nbsp;&nbsp;
+							<mytag:insert mid = "${m.mid}" rmid = "${param.rmid}" />
 						
 							</li>
 						</ul>
@@ -126,6 +126,7 @@ float: center;
 				<form action="login.do" method="post" name="form1">
 					<input type="hidden" name = "mcnt" value = "${mcnt}">
 					<input type="hidden" name = "msgmid" value = "${param.msgmid}">
+					<input type="hidden" name = "qid" value = "${param.qid}">
 					<table border="1">
 						<tr>
 							<td>id</td>
@@ -147,10 +148,9 @@ float: center;
 
 
 
-			<article id="edit">
+			<article id="edit">							<!-- 초기화 되는걸로 -->
 				<h2 class="major">정보수정</h2>
-				<form action="control.jsp" method="post" name="form2">
-					<input type="hidden" name="action" value="update">
+				<form action="uupdate.do" method="post" name="form2">
 					<table border="1">
 						<tr>
 							<td>이름</td>
@@ -170,7 +170,7 @@ float: center;
 						<tr>
 							<td colspan='2'><input type="submit" value="정보수정"></td>
 							<td><input type="button" value="회원탈퇴"
-								onClick="location.href='control.jsp?action=signout'"></td>
+								onClick="location.href='signout.do'"></td>
 						</tr>
 					</table>
 				</form>
@@ -194,9 +194,8 @@ float: center;
 
 			<!-- Contact -->
 			<article id="signup">
-				<h2 class="major">회원가입</h2>
-				<form action="control.jsp" method="post" name="form3">
-					<input type="hidden" name="action" value="signup">
+				<h2 class="major">회원가입</h2>			<!-- 회원가입도 초기화 되야지 -->
+				<form action="signup.do" method="post" name="form3">
 					<table border="1">
 						<tr>
 							<td>이름</td>
@@ -218,9 +217,8 @@ float: center;
 			</article>
 
 			<article id="minsert">
-				<h2 class="major">새글 쓰기</h2>
-				<form action="control.jsp" method="post" name="form4">
-					<input type="hidden" name="action" value="minsert">
+				<h2 class="major">새글 쓰기</h2> 			<!-- 새글쓰기는 초기화가 되야지? -->
+				<form action="minsert.do" method="post" name="form4">				
 					<table border="1">
 						<tr>
 							<td>글쓴이</td>
@@ -239,17 +237,6 @@ float: center;
 			</article>
 
 
-			<ul class="icons">
-				<li><a href="#" class="icon brands fa-twitter"><span
-						class="label">Twitter</span></a></li>
-				<li><a href="#" class="icon brands fa-facebook-f"><span
-						class="label">Facebook</span></a></li>
-				<li><a href="#" class="icon brands fa-instagram"><span
-						class="label">Instagram</span></a></li>
-				<li><a href="#" class="icon brands fa-github"><span
-						class="label">GitHub</span></a></li>
-			</ul>
-			</article>
 
 			<!-- Elements -->
 			<article id="elements">
