@@ -16,7 +16,7 @@ public class LoginAction implements Action{
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException{		
 		HttpSession session=request.getSession();
-		ActionForward forward = new ActionForward();
+		ActionForward forward = null;
 
 
 		MemberVO uVO = new MemberVO();
@@ -27,15 +27,18 @@ public class LoginAction implements Action{
 		uVO.setPasswd(request.getParameter("passwd"));
 		
 		if(uDAO.selectOne(uVO) != null) {
+			forward = new ActionForward();
 			session.setAttribute("mem", uDAO.selectOne(uVO));
 			forward.setRedirect(false);
 			forward.setPath("main.do");
 			
 		}
 		else {
+			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out=response.getWriter();
 			out.println("<script>alert('로그인 실패!');history.go(-1);</script>");
 		}
+		
 		
 
 		return forward;

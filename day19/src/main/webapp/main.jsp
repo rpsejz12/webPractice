@@ -75,7 +75,7 @@ float: center;
 							<li>
 							
 							
-							<a href="main.do?msgmid=${m.mid}&mcnt=${mcnt+3}&qid=${param.qid}">댓글 더보기  "${param.msgmid}"</a> &nbsp;&nbsp;
+							<a href="main.do?msgmid=${m.mid}&mcnt=${mcnt+3}&qid=${param.qid}">댓글 더보기</a> &nbsp;&nbsp;
 							<mytag:insert mid = "${m.mid}" rmid = "${param.rmid}" />
 						
 							</li>
@@ -174,8 +174,7 @@ float: center;
 						</tr>
 					</table>
 				</form>
-
-
+				
 				<ul class="icons">
 					<li><a href="#" class="icon brands fa-twitter"><span
 							class="label">Twitter</span></a></li>

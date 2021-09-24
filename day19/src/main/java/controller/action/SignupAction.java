@@ -1,5 +1,8 @@
 package controller.action;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -8,9 +11,9 @@ import model.member.MemberVO;
 
 public class SignupAction {
 
-	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
+	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		// TODO Auto-generated method stub
-		ActionForward forward = new ActionForward();
+		ActionForward forward = null;
 		
 		
 		MemberVO uVO = new MemberVO();
@@ -22,8 +25,15 @@ public class SignupAction {
 		
 		if(uDAO.insert(uVO)) {
 			System.out.println("member insert 성공");
+			forward = new ActionForward();
 			forward.setRedirect(false);
 			forward.setPath("main.do");
+		}
+		
+		else {
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out=response.getWriter();
+			out.println("<script>alert('회원가입 실패!');history.go(-1);</script>");
 		}
 		
 

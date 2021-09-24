@@ -21,7 +21,7 @@ public class ReplyDAO {
 	Connection conn=null;
 	PreparedStatement pstmt=null;
 	ResultSet rs = null;
-	Boolean flag = true;
+	Boolean flag = false;
 
 	public boolean insert(ReplyVO vo) throws SQLException {
 		System.out.println("rVO :"+vo);
@@ -36,34 +36,28 @@ public class ReplyDAO {
 			pstmt.setString(3, vo.getRmsg());
 
 
-			if(pstmt.executeUpdate() == 0) {
-				System.out.println("rinsert 실패");
-				conn.rollback();
-				conn.setAutoCommit(true); // set autocommit=0;	
-				flag = false;
+			if(pstmt.executeUpdate() != 0) {
+				System.out.println("rinsert 성공");
 			}
 
 
 			pstmt = conn.prepareStatement(mUpdateAdd);
 			pstmt.setInt(1, vo.getMid());
 
-			if(pstmt.executeUpdate()==0) {
-				System.out.println("rinsert,update 실패");
-				conn.rollback();
-				conn.setAutoCommit(true); // set autocommit=0;	
-				flag = false;
+			if(pstmt.executeUpdate() !=0) {
+				System.out.println("rinsert,update 성공");
 			}
 
+			flag = true;
 			conn.commit();
 			System.out.println("rinsert 커밋 성공");
-			conn.setAutoCommit(true); // set autocommit=0;	
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			System.out.println("rinsert 트랜젝션 오류");
 			e.printStackTrace();
 			flag = false;
-			conn.setAutoCommit(true); // set autocommit=0;	
 		}finally {
+			conn.setAutoCommit(true); // set autocommit=0;	
 			JNDI.disconnect(pstmt, conn);
 		}
 		return flag;
@@ -78,33 +72,27 @@ public class ReplyDAO {
 			pstmt = conn.prepareStatement(delete);
 			pstmt.setInt(1, vo.getRid());
 
-			if(pstmt.executeUpdate() == 0) {
-				System.out.println("rdelete 실패");
-				conn.rollback();
-				conn.setAutoCommit(true); // set autocommit=0;	
-				flag = false;
+			if(pstmt.executeUpdate() != 0) {
+				System.out.println("rdelete 성공");
 			}
 			pstmt = conn.prepareStatement(mUpdateMinus);
 			pstmt.setInt(1, vo.getMid());
 			
-			if(pstmt.executeUpdate() == 0) {
-				System.out.println("rdelete,update 실패");
-				conn.rollback();
-				conn.setAutoCommit(true); // set autocommit=0;	
-				flag = false;
+			if(pstmt.executeUpdate() != 0) {
+				System.out.println("rdelete,update 성공");
 			}
 
+			flag = true;
 			conn.commit();
 			System.out.println("rdelete 커밋 성공");
-			conn.setAutoCommit(true); // set autocommit=0;	
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			System.out.println("rdelete 트랜젝션 오류");
 			e.printStackTrace();
 			flag = false;
-			conn.setAutoCommit(true); // set autocommit=0;	
 
 		}finally {
+			conn.setAutoCommit(true);
 			JNDI.disconnect(pstmt, conn);
 		}
 		return flag;

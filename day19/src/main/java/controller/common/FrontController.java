@@ -57,9 +57,9 @@ public class FrontController extends HttpServlet {
 		String uri=request.getRequestURI();
 		String cp=request.getContextPath();
 		String action=uri.substring(cp.length());
+
 		System.out.println();
 		System.out.println(action);
-
 		System.out.println(uri);
 
 		ActionForward forward=null;
@@ -72,7 +72,6 @@ public class FrontController extends HttpServlet {
 		}
 		else if(action.equals("/logout.do")) {	//로그아웃
 			forward=new LogoutAction().execute(request, response);
-
 		}
 		else if(action.equals("/signup.do")) {	//회원가입
 			forward=new SignupAction().execute(request, response);
@@ -107,13 +106,15 @@ public class FrontController extends HttpServlet {
 			forward.setPath("/error/error404.jsp");
 		}
 
-		// 3) 사용자에게 결과 화면 출력
-		if(forward.isRedirect()) {
-			response.sendRedirect(forward.getPath());
-		}
-		else {
-			RequestDispatcher dispatcher=request.getRequestDispatcher(forward.getPath());
-			dispatcher.forward(request, response);
+		if(forward != null) {
+			// 3) 사용자에게 결과 화면 출력
+			if(forward.isRedirect()) {
+				response.sendRedirect(forward.getPath());
+			}
+			else {
+				RequestDispatcher dispatcher=request.getRequestDispatcher(forward.getPath());
+				dispatcher.forward(request, response);
+			}
 		}
 	}
 }

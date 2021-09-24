@@ -1,7 +1,8 @@
 create table member(
     id varchar(15) primary key,
     name varchar(15),
-    passwd varchar(10)
+    passwd varchar(10),
+    mdate date
 );
 
 drop table member;
@@ -31,7 +32,7 @@ drop table reply;
 select * from MESSAGE;
 
 
-insert into member values('timo','티모','1234');
+insert into member values('timo','티모','1234', sysdate);
 insert into message values(1,'timo','글작성',1,2,sysdate);
 insert into reply values(1,1,'timo',sysdate,'댓글1');
 insert into reply values(2,1,'timo',sysdate,'댓글2');

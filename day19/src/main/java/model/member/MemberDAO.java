@@ -11,8 +11,8 @@ import model.common.JNDI;
 
 public class MemberDAO {
 	String selectOne = "select * from member where id = ? and passwd = ?";	//로그인
-	String selectAll = "select * from member"; 								//회원목록 
-	String insert = "insert into member values(?,?,?)";						//회원가입
+	String selectAll = "select * from (select * from member order by mdate desc) where rownum <= 3"; 								//회원목록 
+	String insert = "insert into member values(?,?,?, sysdate)";						//회원가입
 	String delete = "delete from member where id = ?";						//회원탈퇴
 	String update = "update member set passwd = ? where id = ?";			//회원정보변경
 
