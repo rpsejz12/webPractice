@@ -26,10 +26,13 @@ public class MainAction {
 		if(ppage != null) {
 			page = Integer.parseInt(ppage);
 		}
-				
+		
+		//컨트롤러에서 지정해 줄것
 		pageVO.setCurPage(page);
-		pageVO.setPerPage(5);
-		pageVO.setPerPageSet(5);
+		pageVO.setPerPage(5);		//페이지당 보여줄 게시물 수
+		pageVO.setPerPageSet(5);	//아래 <이전> 1 2 3 4 5 <다음> 보여줄 개수
+		
+		
 		pageVO = pageDAO.paging(pageVO);
 		
 		request.setAttribute("datas", testDAO.t_selectAll(pageVO));

@@ -61,9 +61,86 @@ public class PageDAO {
 		
 		System.out.println("pageDAO count :" + vo.getTotal());
 		
+
+	/*	<이전> 1 2 3 4 5 <다음>	
+	 	
+	 	startPage
+	 	
+	 	(curPage - 1) / perPageSet * perPageSet + 1
+	 	
+	 	
+	  	(1-1)/5*5 + 1 = 1
+	 	(2-1)/5*5 + 1 = 1
+	 	(3-1)/5*5 + 1 = 1
+	 	(4-1)/5*5 + 1 = 1
+	 	(5-1)/5*5 + 1 = 1
+
+	 	
+	 	(6-1)/5*5 + 1 = 2
+	 	(7-1)/5*5 + 1 = 2
+	 	(8-1)/5*5 + 1 = 2
+	 	(9-1)/5*5 + 1 = 2
+	 	(10-1)/5*5 + 1 = 2
+	 	
+	 	(11-1)/5*5 + 1 = 3
+	 	
+	 	
+		endPage = startPage + 5-1
+		foreach begin end를 사용할시 start 6 end 10 = 6 7 8 9 10
 		
-		vo.setLastPage(vo.getTotal()/vo.getPerPageSet()+1);	//마지막 페이지 set	
-		vo.setStart(vo.getCurPage()*vo.getPerPage());		//페이지에 보여줄 게시물 시작
+		
+		===============================
+		게시물
+		1 페이지 이면
+		1~5를 보여줘야됨
+		
+		1 일때 start = 1, end = 6
+		2 일때 start = 6, end = 11
+		
+		
+		
+		
+		start = (1-1)*5 + 1
+		end = start + 5
+		
+		start = (2-1)*5 + 1 
+		
+		==============================
+		
+		라스트 페이지
+		카운트로 가져온 값을 perPageSet으로 나눔
+		
+		(count) / perPageSet + 1
+		
+		46
+		47
+		48
+		49 / 5 = 9
+		(50-1) / 5 +1 = 10
+		
+		49 / 5 
+		(50-1) / 5 +1=10
+		50/5 +1 =11
+		
+		(51-1) / 5 +1= 10
+		(52-1) / 5 +1= 10
+		(53-1) / 5 +1= 10
+		(54-1) / 5 +1= 10
+		(55-1) / 5 +1= 10
+		
+		(56-1) / 5 = 11
+		
+		
+		===============================
+		 
+		
+	*/
+		
+		
+		
+	
+		vo.setLastPage((vo.getTotal()-1)/vo.getPerPageSet()+1);	//마지막 페이지 set	
+		vo.setStart((vo.getCurPage()-1)*vo.getPerPage()+1);		//페이지에 보여줄 게시물 시작
 		vo.setEnd(vo.getStart()+vo.getPerPage());			//페이지에 보여줄 게시물 끝		sql에 들어갈 것들		
 		
 		
@@ -72,6 +149,7 @@ public class PageDAO {
 		if(vo.getStartPage() < 1) {
 			vo.setStartPage(1);
 		}
+		
 		vo.setEndPage(vo.getStartPage()+vo.getPerPageSet()-1);				
 		if(vo.getEndPage() > vo.getLastPage()) {
 			vo.setEndPage(vo.getLastPage());

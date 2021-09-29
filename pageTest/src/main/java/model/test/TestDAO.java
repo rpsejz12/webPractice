@@ -10,7 +10,11 @@ import common.page.PageVO;
 import model.common.JNDI;
 
 public class TestDAO {
-	String selectAll = "SELECT * FROM(SELECT A.*, ROWNUM AS RNUM FROM(SELECT * FROM TEST ORDER BY TPK) A WHERE ROWNUM <= ?) WHERE RNUM >?";
+	String selectAll = "SELECT * FROM(SELECT A.*, ROWNUM AS RNUM FROM(SELECT * FROM TEST ORDER BY TPK) A WHERE ROWNUM < ?) WHERE RNUM >=?";
+	String selelctAllm = "SELECT * FROM TEST LIMIT ?, 5";
+	
+	
+	//sql이 긴 이유는 rownum > 10 이런식으로 사용이 안됨 rownum은 1부터 시작해야됨-- 설명하기가 어려운..
 	
 	TestVO data = null;
 	ArrayList<TestVO> datas = new ArrayList<TestVO>();
@@ -29,10 +33,14 @@ public class TestDAO {
 		conn = JNDI.connect();
 		
 		try {
-			pstmt = conn.prepareStatement(selectAll);
-			pstmt.setInt(1, vo.getEnd());
-			pstmt.setInt(2, vo.getStart());
+			// oracle
+			  pstmt = conn.prepareStatement(selectAll); pstmt.setInt(1, vo.getEnd());
+			  pstmt.setInt(2, vo.getStart());
+			 
 			
+			/* mysql
+			 * pstmt = conn.prepareStatement(selelctAllm); pstmt.setInt(1, vo.getStart());
+			 */
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
